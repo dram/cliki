@@ -2,6 +2,7 @@
 
 (defun version-open-p (cliki page version user)
   (and (eql version (Car (page-versions page)))
+       (probe-file (page-pathname page :version version))
        (> (file-write-date (page-pathname page :version version))
 	  (- (get-universal-time) (* 5 60)))
        (destructuring-bind (date title user- descr)
