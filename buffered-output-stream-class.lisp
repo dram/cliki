@@ -18,4 +18,4 @@
     :accessor buffered-output-stream-temporary-write-threshold)
    (extend-by :initarg :extend-by :initform 512 :accessor buffered-output-stream-extend-by)
 
-   (line-column :initform 0 :accessor stream-line-column)))
+   (line-column :initform 0 :reader stream-line-column)))
