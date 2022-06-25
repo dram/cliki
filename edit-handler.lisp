@@ -206,7 +206,6 @@ _(topic markers) and remove this text
 				    request )
   (let* ((cliki (handler-cliki handler))
 	 title
-	 (out (request-stream request))
 	 (body (request-body request))
 	 (cookie nil))
     (unless (request-user request)
@@ -221,12 +220,8 @@ _(topic markers) and remove this text
 	(setf title (save-page cliki request))
       (file-error (c) (signal 'http-internal-server-error 
 			      :client-message (format nil "~A" c))))
-    (request-send-headers request :set-cookie cookie)
-    (with-page-surround (cliki request "Thanks")
-      (format cliki::out "Thanks for editing ~A.  You probably need to `reload' or `refresh' to see your changes take effect"
-	      (format nil "<a href=\"~A\">~A</a>"
-		      (urlstring (merge-url
-				  (cliki-url-root cliki)
-				  (request-path-info request)))
-		      title)))
+    (request-redirect request
+		      (urlstring (merge-url (cliki-url-root cliki)
+					    (request-path-info request)))
+		      :set-cookie cookie)
     t))
