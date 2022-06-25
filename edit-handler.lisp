@@ -154,7 +154,6 @@ _(topic markers) and remove this text
 	    when (typep el 'string)
 	    do (write-sequence el out-file)))))
 
-(defvar *request*)
 (defmethod save-page ((cliki cliki-instance) request &optional title)
   (multiple-value-bind (page titl)
       (find-page-or-redirect cliki request)
@@ -178,12 +177,11 @@ _(topic markers) and remove this text
 				 :cliki cliki)))
 	(when (zerop (length summary)) (setf summary nil))
 	(when (or summary (not (can-save-as-version-p 
-				cliki page version username)))
+				cliki request page version username)))
 	  (incf version)
 	  (setf summary (or summary "(none)")))
 	(let ((pn (page-pathname page :version version)))
-	  (let ((*request* request))
-	    (check-page-save-allowed cliki page version username))
+	  (check-page-save-allowed cliki request page version username)
 	  (unless pn			; set path if was a placeholder
 	    (setf pn (merge-pathnames (escape-for-filename title))
 		  (slot-value page 'pathname) pn))
