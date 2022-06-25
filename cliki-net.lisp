@@ -140,7 +140,8 @@ pre
       (html-stream
        stream
        `(html
-	 (head (title ,(format nil "CLiki : ~A" title))
+	 (head ((meta :charset "UTF-8"))
+	       (title ,(format nil "CLiki : ~A" title))
 	       ,@head
 	       ((link :rel "alternate"
 		      :type "application/rss+xml"
