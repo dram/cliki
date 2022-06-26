@@ -8,6 +8,7 @@
 (defvar *url* (make-url :scheme "http" :host (my-fqdn)
 			:port 8000))
 (defvar *listener* (make-instance 'threaded-http-listener
+				  :address #(127 0 0 1)
 				  :port (url-port *url*)))
 (defvar *cliki-instance* nil)
 (setf *cliki-instance*
