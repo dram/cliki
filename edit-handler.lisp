@@ -77,9 +77,15 @@
       (request-send-headers request
 			    :expires (get-universal-time)
 			    :cache-control "no-cache")
-      (with-page-surround (cliki request (format nil "Edit ``~A''" title)
-				 '(((meta :name "ROBOTS"
-				     :content "noindex,nofollow"))))
+      (with-page-surround
+	  (cliki request (format nil "Edit ``~A''" title)
+		 '(((meta :name "ROBOTS" :content "noindex,nofollow"))
+		   ((script :type "text/javascript"
+			    :src "https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"))
+		   ((link :rel "stylesheet"
+			  :href "https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css"))
+		   ((script :type "text/javascript"
+			    :src "https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"))))
 	(format cliki::out "<form method=post>~%<input type=hidden name=version value=~A>~%" (if page (car (page-versions page)) 0))
 	(let ((default (format nil "<input type=hidden name=T0 value=BODY>
 <textarea wrap=virtual name=E0 rows=20 cols=80>
@@ -127,6 +133,7 @@ _(topic markers) and remove this text
   <br><input type=submit value=Save name=Save></form></body></html>"
 		    (or unauth-username "A N Other")
 		    (if unauth-username "checked=checked" "")))
+	(format out "<script>$('form textarea').summernote();</script>")
 	(format out "<p><b>Please note:</b> other readers will see your changes immediately, but external search engines will continue to see the old version for another 24 hours.  Spamming this site to improve your PageRank is therefore a particularly fruitless activity.<p>")
 	(let ((topics (loop for p being the hash-values of
 			    (cliki-pages cliki)
