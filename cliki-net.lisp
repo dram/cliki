@@ -22,7 +22,6 @@ h1, h2, h3, h4
   color: #999;
   font-family: sans-serif;
 }
-h3 { font-weight: bold; font-size: 175%; }
 
 hr { border: 0; background: black; height: 1px }
 a.internal { color: #0077bb ; }

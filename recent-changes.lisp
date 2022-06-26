@@ -64,7 +64,7 @@
 	    do (with-date this-date 0
 			  (format out
 				  "</blockquote>
-<a name=~D><h3>~/cliki:dayname/ ~A ~/cliki:monthname/ ~A</h3></a>
+<a name=~D><h2>~/cliki:dayname/ ~A ~/cliki:monthname/ ~A</h2></a>
 <blockquote>"
 				  this-date day-of-week day-of-month month year))
 	    if (and title description user)

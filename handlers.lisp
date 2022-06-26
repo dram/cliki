@@ -24,7 +24,6 @@ h1, h2, h3, h4
   font-family: sans-serif;
 /*  text-transform: lowercase; */
 }
-h3 { font-weight: bold; font-size: 175%; }
 /*
 h1:before, h2:before, h3:before, h4:before { color: gold; content: '(' }
 h1:after, h2:after, h3:after, h4:after { color: gold; content: ')' }
