@@ -10,8 +10,7 @@
 	 (declare (ignore date title descr))
 	 (string= user user-))))
 
-(defmethod check-page-save-allowed ((cliki cliki-instance) request page version user)
-  (declare (ignore request))
+(defmethod check-page-save-allowed ((cliki cliki-instance) page version user)
   (unless
       (or (not (page-versions page))
 	  (version-open-p cliki page version user)
@@ -20,9 +19,9 @@
 	    :client-message
 	    "Simultaneous edit: a newer version of this page already exists")))
 
-(defun can-save-as-version-p (cliki request page version user)
+(defun can-save-as-version-p (cliki page version user)
   (handler-case 
-      (progn (check-page-save-allowed cliki request page version user) t)
+      (progn (check-page-save-allowed cliki page version user) t)
     (cliki-page-save-rejected () nil)))
 
 

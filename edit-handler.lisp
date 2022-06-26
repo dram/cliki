@@ -184,11 +184,11 @@ _(topic markers) and remove this text
 				 :cliki cliki)))
 	(when (zerop (length summary)) (setf summary nil))
 	(when (or summary (not (can-save-as-version-p 
-				cliki request page version username)))
+				cliki page version username)))
 	  (incf version)
 	  (setf summary (or summary "(none)")))
 	(let ((pn (page-pathname page :version version)))
-	  (check-page-save-allowed cliki request page version username)
+	  (check-page-save-allowed cliki page version username)
 	  (unless pn			; set path if was a placeholder
 	    (setf pn (merge-pathnames (escape-for-filename title))
 		  (slot-value page 'pathname) pn))

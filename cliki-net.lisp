@@ -80,22 +80,10 @@
 	  (p "CLiki pages can be edited by anyone at any time.  Imagine a fearsomely comprehensive disclaimer of liability.  Now fear, comprehensively")
 	  ))))))
 
-(defparameter *blacklist* (cl-ppcre:create-scanner "interseo|transwell|navinic|activeshow|sba.com.cn|konseptech.com"))
-
-(defmethod check-page-save-allowed ((cliki cliki-net) request page version user)
+(defmethod check-page-save-allowed ((cliki cliki-net) page version user)
   (call-next-method) 
   (when (string-prefix-p "A N Other" user)
-    (signal 'cliki-page-save-rejected "Anonymous posting is disabled.  Please provide a name (preferably your own"))
-  (let ((body (request-body request)))
-    (loop for (name value) in body
-	  for el =
-	  (and (eql (elt name 0) #\T) (digit-char-p (elt name 1))
-	       (parse-form-element-for-keyword
-		cliki request (intern value :keyword)
-		(parse-integer name :start 1 :junk-allowed t)))
-	  when (typep el 'string)
-	  do (if (cl-ppcre:scan *blacklist* el)
-		 (signal 'cliki-page-save-rejected "Internal error")))))
+    (signal 'cliki-page-save-rejected "Anonymous posting is disabled.  Please provide a name (preferably your own")))
 
 
 

@@ -3,7 +3,7 @@
 (in-package :cliki-system)
 
 (defsystem cliki
-  :depends-on (ARANEIDA net-telent-date xmls diff cl-ppcre)
+  :depends-on (ARANEIDA net-telent-date xmls diff)
   :version "0.4.4"
   :components ((:file "defpackage")               
 	       (:file "utilities" :depends-on ("defpackage"))
