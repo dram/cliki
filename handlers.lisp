@@ -226,8 +226,3 @@ pre
 		       (format nil "~S" c-term)))))
 	    (t (format out "Sorry, no pages match your search term."))))
 	t))))
-
-		     
-;; XXX is this used for anything?
-(defvar   *cliki-instance*)
-
