@@ -78,8 +78,9 @@ pre
 }
 
 .search
-{ 
-/*   float: right; */
+{
+  float: right;
+  padding: 1em 0;
   text-align: right;
   text-transform: lowercase;
 }

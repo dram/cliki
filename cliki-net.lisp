@@ -12,12 +12,6 @@
   (write-sequence "
 #banner a:hover.logo { text-decoration: none }
 #banner a.logo { border-width: 0px }
-
-.search
-{ 
-  float: right; 
-  padding:  1em 0 0;
-}
 " stream))
 
 

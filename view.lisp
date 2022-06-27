@@ -25,6 +25,9 @@
                             ((link :rel "stylesheet" :href ,(ahref "admin/cliki.css"))))
                       (body
                        ((div :id "banner")
+			((form :class "search" :action ,(url-path (merge-url (cliki-url-root cliki) "admin/search")))
+			 ((input :name "words" :size "30"))
+			 ((input :type "submit" :value "search")))
 			((a :title "CLiki home page" :class "logo" :href ,(ahref nil))
                          "CL" ((span :class "sub") "iki"))
                         (span "the common lisp wiki")
@@ -78,13 +81,9 @@
 		  "<a href=\"edit/~A\">Edit page</a> | <a href=\"~A?source\">View source</a> | Revisions: "
 		  (urlstring-escape title) (urlstring-escape title))))
     (html-stream out
-		 `((form  :action ,(urlstring (merge-url (cliki-url-root cliki)
-							 "admin/search")))
-		   ((div :id "footer")
-		    ,text
-		    ,@(and page (version-links cliki page request))
-		    ((input :name "words" :size "30"))
-		    ((input :type "submit" :value "search")))))
+		 `((div :id "footer")
+		   ,text
+		   ,@(and page (version-links cliki page request))))
     (format out "<p>CLiki pages can be edited by anyone at any time.  Imagine a fearsomely comprehensive disclaimer of liability.  Now fear, comprehensively")
     ))
 
