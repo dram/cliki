@@ -48,8 +48,6 @@ th
 }
 th, td { padding: 0.2em 0.3em }
 
-ul li { list-style-type: square }
-
 pre
 { 
   background: #cdf; 
