@@ -74,16 +74,23 @@
   
 (defmethod cliki-page-footer
     ((cliki cliki-view) request title)
-  (let* ((page (find-page cliki title))
-	 (out (request-stream request))
-	 (text
-	  (format nil
-		  "<a href=\"edit/~A\">Edit page</a> | <a href=\"~A?source\">View source</a> | Revisions: "
-		  (urlstring-escape title) (urlstring-escape title))))
+  (let ((page (find-page cliki title))
+	(out (request-stream request)))
     (html-stream out
-		 `((div :id "footer")
-		   ,text
-		   ,@(and page (version-links cliki page request))))
+		 (if page
+		     `((div :id "footer")
+		       ((a :href
+			   ,(if page (format nil "edit/~A?v=~A"
+					     (urlstring-escape title)
+					     (request-for-version page request))
+				(format nil "edit/~A" (urlstring-escape title))))
+			"Edit page")
+		       " | "
+		       ((a :href ,(format nil "~A?source" (urlstring-escape title)))
+			"View source")
+		       " | Revisions: "
+		       ,@(version-links cliki page request))
+		     '((div :id "footer") (br))))
     (format out "<p>CLiki pages can be edited by anyone at any time.  Imagine a fearsomely comprehensive disclaimer of liability.  Now fear, comprehensively")
     ))
 
