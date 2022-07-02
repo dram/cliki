@@ -17,7 +17,11 @@
 
 (defmethod cliki-page-surround  ((cliki cliki-net) request function
 				 &key title head)
-  (cliki-page-header cliki request title head)
+  (flet ((href (uri) (url-path (merge-url (cliki-url-root cliki) uri))))
+    (cliki-page-header cliki request title
+		       :head head
+		       :navbar `(((a :href ,(href "CLiki")) "About CLiki")
+				 ((a :href ,(href "Text%20Formatting")) "Text Formatting"))))
   (prog1
       (funcall function (request-stream request))
     (cliki-page-footer cliki request title)))

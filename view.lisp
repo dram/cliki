@@ -2,13 +2,13 @@
 
 (defmethod cliki-page-surround  ((cliki cliki-view) request function
 			     &key title head)
-  (cliki-page-header cliki request title head)
+  (cliki-page-header cliki request title :head head)
   (prog1
       (funcall function (request-stream request))
     (cliki-page-footer cliki request title)))
 
  
-(defmethod cliki-page-header ((cliki cliki-view) request title &optional head)
+(defmethod cliki-page-header ((cliki cliki-view) request title &key head navbar)
   (let* ((stream (request-stream request))
          (home (cliki-url-root cliki)))
     (labels ((ahref (l) (urlstring (araneida:merge-url home l)))) 
@@ -36,8 +36,7 @@
                          ((a :href ,(ahref (cliki-default-page-name cliki)) )
 			  "Home")
 			 ((a :href ,(ahref "Recent%20Changes")) "Recent Changes")
-                         ((a :href ,(ahref "CLiki")) "About CLiki")
-                         ((a :href ,(ahref "Text%20Formatting")) "Text Formatting")
+			 ,@navbar
                          ((a :onclick ,(format nil "if(name=window.prompt('New page name ([A-Za-z0-9 ])')) document.location='~a'+name ;return false;" (urlstring (merge-url home "edit/" ))) :href "#" )
                           "Create New Page")))
 
